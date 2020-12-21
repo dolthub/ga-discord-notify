@@ -1,0 +1,16 @@
+name: Discord CI/CD Ntifications
+author: oscar@dolthub.com
+decription: >
+  Send notifications about
+
+inputs:
+  webhook-url:
+    description:
+    required: true
+  notify-on-success:
+    description: Send notification if the job is successful
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'index.js'
