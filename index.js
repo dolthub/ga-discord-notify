@@ -74,7 +74,7 @@ async function run() {
       const notifyOnSuccess = core.getInput('notify-on-success');
       const hook = new webhook.Webhook(webhookUrl);
 
-      if (status != 'success' || notifyOnSuccess) {
+      if (jobStatus != 'success' || notifyOnSuccess) {
         const msg = new webhook.MessageBuilder()
                           .setName(username)
                           .setAvatar(avatarUrl)
