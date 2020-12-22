@@ -44,6 +44,7 @@ async function getDescription() {
         + `- **Commit URL:** ${payload.head_commit.url}\n`
         + `- **Commit Message:** ${payload.head_commit.message}\n`
         ;
+  }
 
   if (github.context.eventName == 'release') {
     return baseDesc + 'Release Details:\n'
