@@ -19,17 +19,17 @@ async function getDescription() {
   const context = github.context
   const payload = context.payload
 
-  baseDesc = 'Workflow Details:\n'
-              + `- **Repository:** ${github.repository}\n`
-              + `- **Actor:** ${github.actor}\n`
-              + `- **Workflow:** ${github.workflow}\n`
-              + `- **Action:** ${github.action}\n`
-              + `- **Event:** ${github.event}\n`
-              + `- **Commit:** ${github.commit}`
+  baseDesc = '**Workflow Details:**\n'
+              + `- **Repository:** ${context.repository}\n`
+              + `- **Actor:** ${context.actor}\n`
+              + `- **Workflow:** ${context.workflow}\n`
+              + `- **Action:** ${context.action}\n`
+              + `- **Event:** ${context.event}\n`
+              + `- **Commit:** ${context.commit}\n`
               ;
 
   if (github.context.eventName == 'pull_request') {
-    return baseDesc + 'Pull Request Details'
+    return baseDesc + '**Pull Request Details**'
         + `- **Author:** ${payload.pull_request.user.login}\n`
         + `- **URL:** ${payload.pull_request.url}\n`
         + `- **Base:** ${payload.pull_request.base.ref}\n`
@@ -37,7 +37,7 @@ async function getDescription() {
         ;
   }
   if (github.context.eventName == 'push') {
-    return baseDesc + 'Push Details'
+    return baseDesc + '**Push Details**'
         + `- **Author:** ${payload.head_commit.author.name}\n`
         + `- **Committer:** ${payload.head_commit.committer.name}\n`
         + `- **Pusher:** ${payload.pusher.name}\n`
@@ -47,12 +47,12 @@ async function getDescription() {
   }
 
   if (github.context.eventName == 'release') {
-    return baseDesc + 'Release Details:\n'
+    return baseDesc + '**Release Details:**\n'
         + `- **Author:** ${payload.release.author.login}\n`
         + `- **Tag:** ${payload.release.tag_name}`
         + payload.release.prerelease ? ' (pre-release)' : ''
         + '\n'
-        + `- **Url:** ${payload.release.url}`
+        + `- **Url:** ${payload.release.url}\n`
         ;
   }
 
@@ -70,7 +70,7 @@ async function run() {
 
       const context = github.context;
       const username = 'dolthub-ga-bot'
-      const status = context.job.status
+      const status = github.job.status
       const notifyOnSuccess = core.getInput('notify-on-success');
       const hook = new webhook.Webhook(webhookUrl);
 
