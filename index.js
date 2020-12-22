@@ -72,6 +72,7 @@ async function run() {
       const username = 'dolthub-ga-bot'
       const status = context.job.status
       const notifyOnSuccess = core.getInput('notify-on-success');
+      const hook = new webhook.Webhook(webhookUrl);
 
       if (status != 'success' || notifyOnSuccess) {
         const msg = new webhook.MessageBuilder()
