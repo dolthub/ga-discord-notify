@@ -78,7 +78,7 @@ async function run() {
         const msg = new webhook.MessageBuilder()
                           .setName(username)
                           .setAvatar(avatarUrl)
-                          .setColor(colors[status])
+                          .setColor(colors[jobStatus])
                           .setDescription((await getDescription()))
                           .setFooter(`Status: ${jobStatus}`)
                           .setTime();
