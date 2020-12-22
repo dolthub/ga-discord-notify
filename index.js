@@ -28,19 +28,15 @@ async function getDescription() {
               + `- **Commit:** ${github.commit}`
               ;
 
-  if github.context.eventName == 'pull_request' {
+  if (github.context.eventName == 'pull_request') {
     return baseDesc + 'Pull Request Details'
-        + `- **Base Ref:** ${github.base_ref}\n`
-        + `- **Head Ref:** ${github.head_ref}\n`
-        + `- **Author:** ${payload.user.login}\n`
-        + `- **Committer:** ${payload.head_commit.committer.name}\n`
-        + `- **Pusher:** ${payload.pusher.name}\n`
+        + `- **Author:** ${payload.pull_request.user.login}\n`
         + `- **URL:** ${payload.pull_request.url}\n`
         + `- **Base:** ${payload.pull_request.base.ref}\n`
         + `- **Head:** ${payload.pull_request.head.ref}\n`
         ;
   }
-  if github.context.eventName == 'push' {
+  if (github.context.eventName == 'push') {
     return baseDesc + 'Push Details'
         + `- **Author:** ${payload.head_commit.author.name}\n`
         + `- **Committer:** ${payload.head_commit.committer.name}\n`
@@ -49,7 +45,7 @@ async function getDescription() {
         + `- **Commit Message:** ${payload.head_commit.message}\n`
         ;
 
-  if github.context.eventName == 'release' {
+  if (github.context.eventName == 'release') {
     return baseDesc + 'Release Details:\n'
         + `- **Author:** ${payload.release.author.login}\n`
         + `- **Tag:** ${payload.release.tag_name}`
@@ -76,7 +72,7 @@ async function run() {
       const status = context.job.status
       const notifyOnSuccess = core.getInput('notify-on-success');
 
-      if status != 'success' || notifyOnSuccess {
+      if (status != 'success' || notifyOnSuccess) {
         const msg = new webhook.MessageBuilder()
                           .setName(username)
                           .setAvatar(avatarUrl)
