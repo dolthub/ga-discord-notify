@@ -10,6 +10,9 @@ inputs:
   notify-on-success:
     description: Send notification if the job is successful
     required: true
+  job-status:
+    description: status of job pulled from job context
+    required: true
 
 runs:
   using: 'node12'

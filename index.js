@@ -70,7 +70,7 @@ async function run() {
 
       const context = github.context;
       const username = 'dolthub-ga-bot'
-      const status = job.status
+      const jobStatus = core.getInput('job-status');
       const notifyOnSuccess = core.getInput('notify-on-success');
       const hook = new webhook.Webhook(webhookUrl);
 
@@ -80,7 +80,7 @@ async function run() {
                           .setAvatar(avatarUrl)
                           .setColor(colors[status])
                           .setDescription((await getDescription()))
-                          .setFooter(`Status: ${status}`)
+                          .setFooter(`Status: ${jobStatus}`)
                           .setTime();
         hook.send(msg)
       }
