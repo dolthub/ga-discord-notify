@@ -79,7 +79,7 @@ async function run() {
                           .setAvatar(avatarUrl)
                           .setColor(colors[status])
                           .setDescription((await getDescription()))
-                          .setFooter(footer || (`Status: ${status}`))
+                          .setFooter(`Status: ${status}`)
                           .setTime();
         hook.send(msg)
       }
