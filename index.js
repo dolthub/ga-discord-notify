@@ -20,12 +20,12 @@ async function getDescription() {
   const payload = context.payload
 
   baseDesc = '**Workflow Details:**\n'
-              + `- **Repository:** ${context.repository}\n`
+              + `- **Repository:** ${github.repository}\n`
               + `- **Actor:** ${context.actor}\n`
               + `- **Workflow:** ${context.workflow}\n`
               + `- **Action:** ${context.action}\n`
               + `- **Event:** ${context.event}\n`
-              + `- **Commit:** ${context.commit}\n`
+              + `- **Commit:** ${context.sha}\n`
               ;
 
   if (github.context.eventName == 'pull_request') {
@@ -74,7 +74,7 @@ async function run() {
       const notifyOnSuccess = core.getInput('notify-on-success');
       const hook = new webhook.Webhook(webhookUrl);
 
-      if (jobStatus != 'success' || notifyOnSuccess) {
+      if (jobStatus != 'failure' || notifyOnSuccess == 'true' ) {
         const msg = new webhook.MessageBuilder()
                           .setName(username)
                           .setAvatar(avatarUrl)
