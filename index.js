@@ -18,18 +18,19 @@ const colors = {
 async function getDescription() {
   const context = github.context
   const payload = context.payload
+  const { owner, repo } = context.repo;
 
   baseDesc = '**Workflow Details:**\n'
-              + `- **Repository:** ${github.repository}\n`
+              + `- **Repository:** ${owner}/${repo}\n`
               + `- **Actor:** ${context.actor}\n`
-              + `- **Workflow:** ${context.workflow}\n`
-              + `- **Action:** ${context.action}\n`
-              + `- **Event:** ${context.event}\n`
+              + `- **Job:** ${context.job}\n`
+              + `- **Event:** ${context.eventNname}\n`
+              + `- **Ref:** ${context.ref}\n`
               + `- **Commit:** ${context.sha}\n`
               ;
 
   if (github.context.eventName == 'pull_request') {
-    return baseDesc + '**Pull Request Details**'
+    return baseDesc + '**Pull Request Details:**\n'
         + `- **Author:** ${payload.pull_request.user.login}\n`
         + `- **URL:** ${payload.pull_request.url}\n`
         + `- **Base:** ${payload.pull_request.base.ref}\n`
@@ -37,7 +38,7 @@ async function getDescription() {
         ;
   }
   if (github.context.eventName == 'push') {
-    return baseDesc + '**Push Details**'
+    return baseDesc + '**Push Details:**\n'
         + `- **Author:** ${payload.head_commit.author.name}\n`
         + `- **Committer:** ${payload.head_commit.committer.name}\n`
         + `- **Pusher:** ${payload.pusher.name}\n`
