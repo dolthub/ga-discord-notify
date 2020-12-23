@@ -17,3 +17,6 @@ In order to make a job notify Discord of it's status, along with useful metadata
 This ensures that this step _always_ runs, passes the status to the action for parsing, and provides a webhook URL for sending the message to be rendered in Discord.
 
 `notify-on-success` is used for release notifications. Our general policy is that we notify on failed and cancelled jobs, and all releases.
+
+## Channels
+Note that here we use `secrets.DISCORD_WEBHOOK`. This webhook will send notifications to a specific channel. Users can easily add webhooks for other channels to the secrets of their repository to get specific information sent to a channel.
