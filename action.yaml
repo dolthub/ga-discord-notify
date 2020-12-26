@@ -5,13 +5,13 @@ decription: >
 
 inputs:
   webhook-url:
-    description:
+    description: The Discord Webhook URL to send messsages to
     required: true
   notify-on-success:
     description: Send notification if the job is successful
     required: true
   job-status:
-    description: status of job pulled from job context
+    description: Status of job pulled from job context
     required: true
 
 runs:
