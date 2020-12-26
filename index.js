@@ -18,18 +18,21 @@ const colors = {
 async function getDescription() {
   const context = github.context
   const payload = context.payload
+  const { owner, repo } = context.repo;
+  const url = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`
 
   baseDesc = '**Workflow Details:**\n'
-              + `- **Repository:** ${context.repository}\n`
+              + `- **Repository:** ${owner}/${repo}\n`
               + `- **Actor:** ${context.actor}\n`
-              + `- **Workflow:** ${context.workflow}\n`
-              + `- **Action:** ${context.action}\n`
-              + `- **Event:** ${context.event}\n`
-              + `- **Commit:** ${context.commit}\n`
+              + `- **Job:** ${context.job}\n`
+              + `- **Event:** ${context.eventName}\n`
+              + `- **Ref:** ${context.ref}\n`
+              + `- **Commit:** ${context.sha}\n`
+              + `- **Run URL:** ${url}\n`
               ;
 
   if (github.context.eventName == 'pull_request') {
-    return baseDesc + '**Pull Request Details**'
+    return baseDesc + '**Pull Request Details:**\n'
         + `- **Author:** ${payload.pull_request.user.login}\n`
         + `- **URL:** ${payload.pull_request.url}\n`
         + `- **Base:** ${payload.pull_request.base.ref}\n`
@@ -37,7 +40,7 @@ async function getDescription() {
         ;
   }
   if (github.context.eventName == 'push') {
-    return baseDesc + '**Push Details**'
+    return baseDesc + '**Push Details:**\n'
         + `- **Author:** ${payload.head_commit.author.name}\n`
         + `- **Committer:** ${payload.head_commit.committer.name}\n`
         + `- **Pusher:** ${payload.pusher.name}\n`
@@ -74,7 +77,10 @@ async function run() {
       const notifyOnSuccess = core.getInput('notify-on-success');
       const hook = new webhook.Webhook(webhookUrl);
 
-      if (jobStatus != 'success' || notifyOnSuccess) {
+      obstr = JSON.stringify(context, undefined, 2)
+      core.info(`The event github.context: ${obstr}`);
+
+      if (jobStatus != 'success' || notifyOnSuccess == 'true' ) {
         const msg = new webhook.MessageBuilder()
                           .setName(username)
                           .setAvatar(avatarUrl)
