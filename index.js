@@ -34,7 +34,7 @@ async function getDescription() {
   if (github.context.eventName == 'pull_request') {
     return baseDesc + '**Pull Request Details:**\n'
         + `- **Author:** ${payload.pull_request.user.login}\n`
-        + `- **URL:** ${payload.pull_request.url}\n`
+        + `- **URL:** ${payload.pull_request.html_url}\n`
         + `- **Base:** ${payload.pull_request.base.ref}\n`
         + `- **Head:** ${payload.pull_request.head.ref}\n`
         ;
